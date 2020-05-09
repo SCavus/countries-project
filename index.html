@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>countries-project</title>
   <link href="style.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.google.com/specimen/Nunito+Sans" rel="stylesheet">
   <script src="https://kit.fontawesome.com/dcd6896a3f.js" crossorigin="anonymous"></script>
 
 </head>
@@ -14,16 +14,16 @@
     <div id="page-title">Where in the World?</div>
     <div id="switch-mode">night/day</div>
   </div>
-  <div id="sort">
-    <div id="search-country">
-      <i id="mag-icon" class="icon fa fa-search"></i>
-      <input class="search-country" type="text" placeholder="Search for a country"></input>
-    </div>
-    <div id="filter-region" class="filter-region">filter
-      <select name="filter by region" id="filter-region" placeholder= "Filter by Region"></select>
-    </div>
+  <div id="display">
+    <div id="sort">
+      <div id="search-country">
+        <i id="mag-icon" class="icon fa fa-search"></i>
+        <input class="search-country" type="text" placeholder="Search for a country"></input>
+      </div>
+        <select id="filter-region" class="filter-region"></select>
+      </div>
+    <div id="front-page" class="countries-page"></div>
   </div>
-  <div id="front-page" class="countries-page"></div>
   <script src="script.js"></script>
 </body>
 </html>
