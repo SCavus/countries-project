@@ -1,19 +1,39 @@
 body {
     height: 100vh;
-    width: 90%;
+    width: 1440px;
     background-color:hsl(207, 26%, 17%);
     display: flex;
     flex-direction: column;
+    align-items: center;
     font-family: 'Nunito', sans-serif;
     color: white;
 }
+.body-light {
+    height: 100vh;
+    width: 1440px;
+    background-color: hsl(0, 0%, 98%);
+    display: flex;
+    flex-direction: column;
+    font-family: 'Nunito', sans-serif;
+    color: hsl(0, 0%, 52%);
+}
 .header{
     background-color: hsl(209, 23%, 22%);
+    width: 1440px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     font-size: larger;
-    font-weight: 700;
+    font-weight: 800;
+    margin: 0;
+}
+.header-light {
+    background-color: hsl(0, 0%, 98%);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: larger;
+    font-weight: 800;
     margin: 0;
 }
 #page-title {
@@ -33,37 +53,54 @@ body {
     flex-direction: row;
     justify-content: space-between;
 }
-#mag-icon {
-    padding-left: 60px;
-    background-color: hsl(209, 23%, 22%);
-    margin-right: 0;
-    padding-right: 0;
-
+.input-icon i {
+    margin-top: 50px;
+    position: absolute;
+    margin-left: 100px;
 }
+.fa-search {
+    padding: 0px;
+    padding-top: 12px;
+    padding-left: 10px;
+    width: 40px;
+    height: 2em;
+    background-color: hsl(209, 23%, 22%);
+}
+
 .search-country {
     background-color: hsl(209, 23%, 22%);
-    position: relative;
-    padding-left: 0px;
-    height: 2em;
+    padding-left: 100px;
+    margin-left: 100px;
+    height: 40px;
     margin-top: 50px;
-    margin-left: 0;
     color: whitesmoke;
     border: none
 }
-.filter-region {
+.filter-region{
     width: 180px;
-    background-color: hsl(209, 23%, 22%);
+    background-color:  hsl(209, 23%, 22%);
     position: relative;
     padding-right: 60px;
     height: 2em;
     margin-top: 50px;
-    color: rgb(238, 228, 228);
+    color: hsl(0, 0%, 98%);
+    border: none;
+}
+.filter-region-light {
+    width: 180px;
+    background-color: hsl(0, 0%, 98%);
+    position: relative;
+    padding-right: 60px;
+    height: 2em;
+    margin-top: 50px;
+    color: hsl(0, 0%, 52%);
     border: none;
 }
 .option {
     color: rgb(241, 182, 182);
 }
 .countries-page {
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -80,8 +117,11 @@ body {
 .country {
     background-color: hsl(209, 23%, 22%);
     max-width: 250px;
-    margin: 30px;
-
+    margin: 40px 30px 40px 30px;
+}
+.country-light {
+    background-color: hsl(0, 0%, 98%);
+    color: hsl(0, 0%, 52%);
 }
 .flag {
     width: 250px;
@@ -94,6 +134,9 @@ body {
     height: 300px;
     margin: 0;
     padding: 0;
+}
+.info-block {
+    padding-bottom: 40px;
 }
 .country-name, 
 .info {

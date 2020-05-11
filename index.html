@@ -12,15 +12,22 @@
 <body>
   <div id="header" class="header">
     <div id="page-title">Where in the World?</div>
-    <div id="switch-mode">night/day</div>
+    <div id="switch-mode">night mode</div>
   </div>
   <div id="display">
     <div id="sort">
-      <div id="search-country">
-        <i id="mag-icon" class="icon fa fa-search"></i>
-        <input class="search-country" type="text" placeholder="Search for a country"></input>
+      <div id="search-country" class="input-icon">
+        <i class="fa fa-search"></i>
+        <input id="search" class="search-country" type="text" placeholder="Search for a country"></input>
       </div>
-        <select id="filter-region" class="filter-region"></select>
+        <select id="filterbyregion" class="filter-region">
+          <!-- <option value="">Filter by Region</option> -->
+          <option value="Africa">Africa</option>
+          <option value="Americas">America</option>
+          <option value="Asia">Asia</option>
+          <option value="Europe">Europe</option>
+          <option value="Oceania">Oceania</option>
+        </select>
       </div>
     <div id="front-page" class="countries-page"></div>
   </div>
