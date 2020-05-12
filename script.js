@@ -1,45 +1,41 @@
+let allCountries;
+
 function setup() {
   fetch(
-    "https://restcountries.eu/rest/v2/all?fields=name;capital;currencies;region;subregion;population;borders;topLevelDomain;nativeName;languages;flag"
+    "https://restcountries.eu/rest/v2/all?fields=name;capital;alpha3Code;currencies;region;subregion;population;borders;topLevelDomain;nativeName;languages;flag"
   )
     .then((response) => response.json())
     .then((data) => {
-      //console.log(data)
+      allCountries = data;
       displayCountries(data);
       searchTerm(data);
-      const filterByRegion = document.querySelector("#filterbyregion");
-      filterByRegion.addEventListener("change", (e) => {
-          console.log(e.target.value)
-          let countriesByRegion = data.filter((key) => {
-          if (key.region === e.target.value) {
-            return key;
-          } else {
-            displayCountries(data)
-          }
-        });
-        displayCountries(countriesByRegion);
-      });
     });
+}
 
-  const mainPage = document.querySelector("#front-page");
-  const country = document.createElement("div");
-//   country.innerHTML = `<div>
-//         <div><img id="flag" class="flag"></div>
-//         <div><h3 class="country-name"></h3></div>
-//         <div class="info-block">
-//             <p class="info"></p>
-//             <p class="info"></p>
-//             <p class="info"></p>
-//         </div>
-//     </div>`;
+const filterByRegion = document.querySelector("#filterbyregion");
+filterByRegion.addEventListener("change", (e) => {
+  console.log(e.target.value);
+  let countriesByRegion = allCountries.filter((key) => {
+    if (key.region === e.target.value) {
+      return key;
+    } else {
+      displayCountries(allCountries);
+    }
+  });
+  displayCountries(countriesByRegion);
+});
 
-  function displayCountries(countryData) {
-    mainPage.innerHTML = "";
-    countryData.forEach((element) => {
-      const country = document.createElement("div");
-      country.className = "country";
-      country.innerHTML = `<div>
-            <div><img id="flag" class="flag" src=${element.flag}></div>
+const mainPage = document.querySelector("#front-page");
+const country = document.createElement("div");
+
+function displayCountries(countryData) {
+  mainPage.innerHTML = "";
+  countryData.forEach((element) => {
+    const country = document.createElement("div");
+    country.className = "country";
+    country.innerHTML = `<div>
+            <div class='flag-container'>
+            <img id=${element.alpha3Code} class="flag" src=${element.flag}></div>
             <div><h3 class="country-name">${element.name}</h3></div>
             <div class="info-block">
                 <p class="info">Population: ${element.population}</p>
@@ -47,72 +43,92 @@ function setup() {
                 <p class="info">Capital: ${element.capital}</p>
             </div>
         </div>`;
-      mainPage.appendChild(country);
+    mainPage.appendChild(country);
+    const flag = document.getElementById(element.alpha3Code);
+    flag.addEventListener("click", () => {
+      displayDetail(flag.id);
     });
-  }
-
-  //   let flag = document.querySelector("#flag")
-  //   console.log(flag)
-  //   flag.addEventListener('click', (e) => {
-  //       let countryId = e.target.value
-  //       console.log(countryId)
-  //       const display = document.querySelector('#display')
-  //       display.innerHTML = ""
-  //       country.className = "single-country"
-  //       country.innerHTML = `
-  //       <div><button>Back</button></div>
-  //       <div>
-  //           <img class="flag-single" src=${element.flag}>
-  //           <div>
-  //               <div>
-  //                   <h3 class="country-name">${element.name}</h3>
-  //                   <p class="info-single">Native Name: ${element.population}</p>
-  //                   <p class="info-single">Population: ${element.population}</p>
-  //                   <p class="info-single">Region: ${element.region}</p>
-  //                   <p class="info-single">Sub Region: ${element.region}</p>
-  //                   <p class="info-single">Capital: ${element.capital}</p>
-  //                   <p class="info-single">Top Level Domain: ${element.region}</p>
-  //                   <p class="info-single">Currencies: ${element.region}</p>
-  //                   <p class="info-single">Languages: ${element.region}</p>
-  //               </div>
-  //               <div>
-  //                   <h4>Border Countries</h4>
-  //               </div>
-  //           </div>
-  //       </div>`
-  //         mainPage.appendChild(country)
-  //   }
-  // )
-
-  function searchByRegion() {
-    let regions = ["Africa", "America", "Asia", "Europe", "Oceania"];
-    let filter = document.querySelector("#filter-region");
-    regions.forEach = (region) => {
-      let option = `<option value="${region}">${region}</option>`;
-      filter.innerHTML += option;
-    };
-  }
-
-  function searchTerm(countryList) {
-    const search = document.querySelector("#search");
-    search.addEventListener("keyup", function (e) {
-      e.preventDefault();
-      let term = search.value.toLowerCase();
-      let searchRes = countryList.filter((element) =>
-        element.name.toLowerCase().includes(term)
-      );
-      displayCountries(searchRes);
-    });
-  }
-
-  function displayByRegion(data) {
-    const region = document.querySelector("option");
-    region.addEventListener("click", (e) => {
-      e.preventDefault();
-      let regionCountries = data.forEach((element) => {
-        region === element.region;
-      });
-    });
-  }
+  });
 }
+
+function displayDetail(countryId) {
+  document.querySelector("#display").className += "hide";
+  let selectedCountry = allCountries.filter(
+    (element) => countryId === element.alpha3Code
+  );
+  const countryDetailPage = document.querySelector("#country-details-page");
+  countryDetailPage.innerHTML = `
+        <div><button>Back</button></div>
+        <div class="single-country">
+          <img class="flag-single" src=${selectedCountry[0].flag}>
+          <div class="info-container">
+            <h3 class="country-name">${selectedCountry[0].name}</h3>
+            <div class="infoblock-single">
+              <p class="info-single">Native Name: ${selectedCountry[0].nativeName}</p>
+              <p class="info-single">Population: ${selectedCountry[0].population}</p>
+              <p class="info-single">Region: ${selectedCountry[0].region}</p>
+              <p class="info-single">Sub Region: ${selectedCountry[0].subregion}</p>
+              <p class="info-single">Capital: ${selectedCountry[0].capital}</p>
+              <p class="info-single">Top Level Domain: ${selectedCountry[0].topLevelDomain}</p>
+              <p class="info-single">Currencies: ${selectedCountry[0].currencies}</p>
+              <p class="info-single">Languages: ${selectedCountry[0].languages}</p>
+            </div>
+            <div>
+                <h4>Border Countries</h4>
+            </div>
+          </div>
+        </div>`;
+  let button = document.querySelector('button')
+  button.addEventListener('click', ()=> {
+    countryDetailPage.className+= "hide"
+    document.querySelector("#display").className += "show";
+
+  })
+}
+// function displayDetail() {
+//   mainPage.innerHTML = ""
+//   console.log(countryId);
+//   let selectedCountry = allCountries.filter((element) => {
+//     if (countryId === element.name) {
+//       return element
+//     }})
+//     console.log(selectedCountry)
+//     const display = document.querySelector("#display");
+//     country.className = "single-country";
+//     country.innerHTML = `
+//         <div><button>Back</button></div>
+//         <div>
+//             <img class="flag-single" src=${selectedCountry[0].flag}>
+//             <div>
+//                 <div>
+//                     <h3 class="country-name">${selectedCountry[0].name}</h3>
+//                     <p class="info-single">Native Name: ${selectedCountry[0].nativeName}</p>
+//                     <p class="info-single">Population: ${selectedCountry[0].population}</p>
+//                     <p class="info-single">Region: ${selectedCountry[0].region}</p>
+//                     <p class="info-single">Sub Region: ${selectedCountry[0].subregion}</p>
+//                     <p class="info-single">Capital: ${selectedCountry[0].capital}</p>
+//                     <p class="info-single">Top Level Domain: ${selectedCountry[0].topLevelDomain}</p>
+//                     <p class="info-single">Currencies: ${selectedCountry[0].currencies}</p>
+//                     <p class="info-single">Languages: ${selectedCountry[0].languages}</p>
+//                 </div>
+//                 <div>
+//                     <h4>Border Countries</h4>
+//                 </div>
+//             </div>
+//         </div>`;
+//     display.appendChild(country);
+//   }
+
+function searchTerm(countryList) {
+  const search = document.querySelector("#search");
+  search.addEventListener("keyup", function (e) {
+    e.preventDefault();
+    let term = search.value.toLowerCase();
+    let searchRes = countryList.filter((element) =>
+      element.name.toLowerCase().includes(term)
+    );
+    displayCountries(searchRes);
+  });
+}
+
 window.onload = setup;
